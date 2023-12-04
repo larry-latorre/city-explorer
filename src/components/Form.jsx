@@ -9,11 +9,16 @@ export default function CityForm() {
     const [location, setLocation]= useState({display_name: "info"})
     const [searchQuery, setSearchQuery]= useState('')
 
-    async function getLocation(){
+    async function getLocation(event){
+      event.preventDefault();
+      console.log("hello")
         const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
         const response = await axios.get(API);
+        const locationObj = response.data[0];
+    setLocation(locationObj);
         console.log(response)
     }
+
     function updateQuery(event){
         setSearchQuery(event.target.value)
 
@@ -24,12 +29,14 @@ export default function CityForm() {
     
     
   return (
-    <Form>
+    <Form onSubmit={getLocation}>
       <Form.Group className="mb-3" >
         <Form.Control   placeholder="Enter City" onChange={updateQuery}/>
       </Form.Group>
       <p>City:{location.display_name}</p>
-      <Button onClick={getLocation} variant="primary" type="submit">
+      <p>Latitude:{location.lat}</p>
+      <p>Longitude:{location.lon}</p>
+      <Button  variant="primary" type="submit">
         Explore
       </Button>
     </Form>
