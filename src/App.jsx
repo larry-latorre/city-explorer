@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Header from './components/Header';
 import CityForm from './components/Form';
+import Footer from './components/Footer';
 function App() {
   
 
@@ -10,6 +11,7 @@ function App() {
     <Container>
       <Header />
       <CityForm />
+      <Footer />
     </Container>
   )
 }
