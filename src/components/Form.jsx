@@ -29,7 +29,7 @@ export default function CityForm() {
     }
 
     function generateMapUrl(){
-      
+      console.log(`https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`)
         return `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`;
       }
      
