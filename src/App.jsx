@@ -1,6 +1,5 @@
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
 import Header from './components/Header';
 import CityForm from './components/Form';
 import Footer from './components/Footer';

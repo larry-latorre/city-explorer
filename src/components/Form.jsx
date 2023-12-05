@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function CityForm() {
-    const [location, setLocation]= useState({display_name: "info"})
+    const [location, setLocation]= useState({display_name: ""})
     const [searchQuery, setSearchQuery]= useState('')
 
     async function getLocation(event){
@@ -37,15 +37,15 @@ export default function CityForm() {
         <Form.Control   placeholder="Enter City" onChange={updateQuery}/>
       </Form.Group>
     
-      <Button  variant="primary" type="submit">
-        Explore
+      <Button  variant="secondary" type="submit">
+        Explore!
       </Button>
-      <p>City:{location.display_name}</p>
-      <p>Latitude:{location.lat}</p>
-      <p>Longitude:{location.lon}</p>
+      <h5>City:</h5> <p>{location.display_name}</p>
+      <h5>Latitude:</h5> <p>{location.lat}</p>
+      <h5>Longitude:</h5> <p>{location.lon}</p>
     </Form>
     
-            <Card bg="secondary" border="primary" style={{ width: '45rem', margin:'auto' }}>
+            <Card bg="secondary" border="dark" style={{ width: '45rem', margin:'auto' }}>
             <Card.Body >
               <img src={generateMapUrl()} alt="Static Map" width="100%" />
             </Card.Body>
