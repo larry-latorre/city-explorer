@@ -10,12 +10,17 @@ export default function CityForm() {
     const [location, setLocation]= useState({display_name: ""})
     const [searchQuery, setSearchQuery]= useState('')
 
-    async function getLocation(event){
+    async function getLocation(event) {
       event.preventDefault();
+      // try {
         const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
         const response = await axios.get(API);
         const locationObj = response.data[0];
-    setLocation(locationObj);
+        setLocation(locationObj);
+      // } catch (error) {
+      //   console.error('Error fetching location:', error);
+        
+      // }
     }
 
     function updateQuery(event){
@@ -26,7 +31,7 @@ export default function CityForm() {
     function generateMapUrl(){
       
         return `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`;
-      };
+      }
      
     
      
