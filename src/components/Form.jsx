@@ -12,15 +12,15 @@ export default function CityForm() {
 
     async function getLocation(event) {
       event.preventDefault();
-      // try {
+       try {
         const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
         const response = await axios.get(API);
         const locationObj = response.data[0];
         setLocation(locationObj);
-      // } catch (error) {
-      //   console.error('Error fetching location:', error);
+       } catch (error) {
+         console.error('Error fetching location:', error);
         
-      // }
+       }
     }
 
     function updateQuery(event){
