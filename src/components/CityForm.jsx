@@ -2,8 +2,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
-
 import Card from 'react-bootstrap/Card'; 
+import Weather from './weather';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function CityForm() {
@@ -64,12 +64,12 @@ async function getLocation(event) {
       <h5>Latitude:</h5> <p>{location.lat}</p>
       <h5>Longitude:</h5> <p>{location.lon}</p>
     </Form>
-    
-            <Card bg="secondary" border="dark" style={{ width: '45rem', margin:'auto' }}>
-            <Card.Body >
-              <img src={generateMapUrl()} alt="Static Map" width="100%" />
-            </Card.Body>
-          </Card>
+    <Weather />
+      <Card bg="secondary" border="dark" style={{ width: '45rem', margin:'auto' }}>
+          <Card.Body >
+            <img src={generateMapUrl()} alt="Static Map" width="100%" />
+          </Card.Body>
+        </Card>
      </>
   );
    
