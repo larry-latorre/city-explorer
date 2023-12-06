@@ -10,18 +10,34 @@ export default function CityForm() {
     const [location, setLocation]= useState({display_name: ""})
     const [searchQuery, setSearchQuery]= useState('')
 
-    async function getLocation(event) {
-      event.preventDefault();
-       try {
-        const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
-        const response = await axios.get(API);
-        const locationObj = response.data[0];
-        setLocation(locationObj);
-       } catch (error) {
-         console.error('Error fetching location:', error);
-        
-       }
+  
+
+async function getLocation(event) {
+  event.preventDefault();
+  const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
+
+  try {
+    const response = await axios.get(API);
+    const locationObj = response.data[0];
+
+  
+    if (locationObj.lat && locationObj.lon) {
+      
+      const weatherResponse = await axios.get(`http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}`);
+      const weatherData = weatherResponse.data;
+
+      console.log('Weather Data:', weatherData);
+
+    } else {
+      console.log('City not found or missing lat/lon information.');
     }
+
+    setLocation(locationObj);
+  } catch (error) {
+    console.error('Error fetching location:', error);
+  }
+}
+
 
     function updateQuery(event){
         setSearchQuery(event.target.value)
@@ -29,7 +45,6 @@ export default function CityForm() {
     }
 
     function generateMapUrl(){
-      console.log(`https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`)
         return `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`;
       }
      
