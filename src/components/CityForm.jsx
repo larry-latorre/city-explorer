@@ -16,25 +16,22 @@ async function getLocation(event) {
   event.preventDefault();
   const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
 
-  try {
+  // try {
     const response = await axios.get(API);
     const locationObj = response.data[0];
 
-  
+    let weatherUrl = `http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchQuery}`
+    console.log(weatherUrl)
     if (locationObj.lat && locationObj.lon) {
       
-      const weatherResponse = await axios.get(`http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}`);
+      const weatherResponse = await axios.get(`http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchQuery}`);
       const weatherData = weatherResponse.data;
 
       console.log('Weather Data:', weatherData);
 
-    } else {
-      console.log('City not found or missing lat/lon information.');
-    }
-
     setLocation(locationObj);
-  } catch (error) {
-    console.error('Error fetching location:', error);
+  // } catch (error) {
+  //   console.error('Error fetching location:', error);
   }
 }
 
