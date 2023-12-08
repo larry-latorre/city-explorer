@@ -6,32 +6,32 @@ import Card from 'react-bootstrap/Card';
 import Weather from './weather';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
+
 export default function CityForm() {
     const [location, setLocation]= useState({display_name: ""})
     const [searchQuery, setSearchQuery]= useState('')
-
+    const [weatherData, setWeatherData] = useState([]);
   
 
 async function getLocation(event) {
   event.preventDefault();
   const API = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchQuery}&format=json`;
 
-  // try {
+  
     const response = await axios.get(API);
     const locationObj = response.data[0];
 
-    let weatherUrl = `http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchQuery}`
-    console.log(weatherUrl)
+    
     if (locationObj.lat && locationObj.lon) {
       
       const weatherResponse = await axios.get(`http://localhost:3000/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchQuery}`);
-      const weatherData = weatherResponse.data;
+      
+      const weatherData = weatherResponse.data.forecasts;
 
       console.log('Weather Data:', weatherData);
-
-    setLocation(locationObj);
-  // } catch (error) {
-  //   console.error('Error fetching location:', error);
+      setWeatherData(weatherData);
+      setLocation(locationObj);
+    
   }
 }
 
@@ -42,7 +42,7 @@ async function getLocation(event) {
     }
 
     function generateMapUrl(){
-        return `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`;
+       return `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${location.lat},${location.lon}&zoom=12`;
       }
      
     
@@ -61,7 +61,8 @@ async function getLocation(event) {
       <h5>Latitude:</h5> <p>{location.lat}</p>
       <h5>Longitude:</h5> <p>{location.lon}</p>
     </Form>
-    <Weather />
+    <Weather weatherData={weatherData} />
+
       <Card bg="secondary" border="dark" style={{ width: '45rem', margin:'auto' }}>
           <Card.Body >
             <img src={generateMapUrl()} alt="Static Map" width="100%" />
